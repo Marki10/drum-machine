@@ -22,6 +22,11 @@ export const DrumSet: React.FC = () => {
   const trigger = (name: string) => {
     setActive((a) => ({ ...a, [name]: true }));
     setTimeout(() => setActive((a) => ({ ...a, [name]: false })), 120);
+
+    if (import.meta.env.MODE !== 'test') {
+      const audio = new Audio(`/sounds/${name}.wav`);
+      audio.play().catch(() => {});
+    }
   };
 
   useEffect(() => {
