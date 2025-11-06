@@ -25,7 +25,8 @@
   border: none;
 }
 
-.pad:active {
+.pad:active,
+.pad.active {
   transform: translateY(2px) scale(0.97);
   box-shadow:
     inset 3px 3px 6px rgba(0, 0, 0, 0.4),

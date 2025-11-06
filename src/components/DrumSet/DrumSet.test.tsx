@@ -2,6 +2,8 @@ import { render, screen, fireEvent, act, waitFor } from '@testing-library/react'
 import { DrumSet } from './DrumSet';
 import { RecorderProvider } from '../../context/RecorderProvider';
 
+import padStyles from './DrumSet.module.css';
+
 describe('DrumSet component', () => {
   it('renders all drum pads', () => {
     render(
@@ -35,6 +37,6 @@ describe('DrumSet component', () => {
       await new Promise((r) => setTimeout(r, 150));
     });
 
-    expect(snareButton!.className).not.toMatch(/active/);
+    expect(snareButton).toHaveClass(padStyles.pad, padStyles.snare, padStyles.active);
   });
 });

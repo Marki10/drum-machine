@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { RecorderContext } from './RecorderContext';
-import type { DrumSound } from '../types';
+import type { DrumSound, DrumHit } from '../types';
 
 export const RecorderProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [recording, setRecording] = useState<{ sound: DrumSound; time: number }[]>([]);
+  const [recording, setRecording] = useState<DrumHit[]>([]);
   const [isRecording, setIsRecording] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const startTime = useRef<number | null>(null);
@@ -13,7 +13,7 @@ export const RecorderProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) setRecording(parsed);
+        if (Array.isArray(parsed)) setRecording(parsed as DrumHit[]);
       } catch {
         console.warn('Invalid saved recording data');
       }
@@ -46,6 +46,11 @@ export const RecorderProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     [isRecording],
   );
 
+  const clearRecording = useCallback(() => {
+    setRecording([]);
+    localStorage.removeItem('drumRecording');
+  }, []);
+
   const playRecording = useCallback(async () => {
     if (recording.length === 0) return;
     setIsPlaying(true);
@@ -71,6 +76,7 @@ export const RecorderProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         stopRecording,
         playRecording,
         recordHit,
+        clearRecording,
       }}
     >
       {children}

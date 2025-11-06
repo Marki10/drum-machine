@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useRecorder } from '../../hooks/hooks';
 import type { DrumSound } from '../../types';
 import styles from './DrumSet.module.css';
@@ -14,24 +14,44 @@ const PAD_CONFIG: Record<
 
 export const DrumSet: React.FC = () => {
   const { recordHit } = useRecorder();
+  const [active, setActive] = useState<Record<DrumSound, boolean>>({
+    kick: false,
+    snare: false,
+    hihat: false,
+  });
 
-  const trigger = (sound: DrumSound) => {
+  const trigger = useCallback((sound: DrumSound) => {
+    setActive((a) => ({ ...a, [sound]: true }));
+    setTimeout(() => setActive((a) => ({ ...a, [sound]: false })), 180);
+
     if (import.meta.env.MODE !== 'test') {
       const audio = new Audio(PAD_CONFIG[sound].soundFile);
       audio.play().catch(() => {});
     }
-  };
+  }, []);
 
   useEffect(() => {
     const onHit = (e: Event) => {
-      const name = (e as CustomEvent).detail?.sound;
+      const ce = e as CustomEvent<{ sound?: DrumSound }>;
+      const name = ce.detail?.sound;
+      if (name) trigger(name);
+    };
+    document.addEventListener('drum-hit', onHit);
+    return () => document.removeEventListener('drum-hit', onHit);
+  }, [trigger]);
+
+  useEffect(() => {
+    const keyMap: Record<string, DrumSound> = { a: 'kick', s: 'snare', d: 'hihat' };
+    const onKey = (e: KeyboardEvent) => {
+      const name = keyMap[e.key.toLowerCase()];
       if (!name) return;
       trigger(name);
+      recordHit(name);
     };
 
-    document.addEventListener('drum-hit', onHit as EventListener);
-    return () => document.removeEventListener('drum-hit', onHit as EventListener);
-  }, []);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [recordHit, trigger]);
 
   return (
     <div className={styles.drumSetContainer}>
@@ -40,13 +60,11 @@ export const DrumSet: React.FC = () => {
         return (
           <button
             key={sound}
-            data-testid={`pad-${sound}`}
-            className={`${styles.pad} ${className}`}
+            className={`${styles.pad} ${className} ${active[sound] ? styles.active : ''}`}
             onClick={() => {
               trigger(sound);
               recordHit(sound);
             }}
-            aria-label={label}
           >
             <div className={styles.padContent}>
               <span className={styles.padLabel}>{label}</span>

@@ -14,6 +14,10 @@ export const Progress: React.FC = () => {
     }
 
     const total = recording.at(-1)?.time || 0;
+    if (total <= 0) {
+      setProgress(100);
+      return;
+    }
     const start = Date.now();
     const interval = setInterval(() => {
       const elapsed = Date.now() - start;
