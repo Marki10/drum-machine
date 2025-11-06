@@ -1,5 +1,6 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import { RecorderProvider, useRecorder } from './RecorderContext';
+import { useRecorder } from '../hooks/hooks';
+import { RecorderProvider } from './RecorderProvider';
 
 describe('RecorderContext', () => {
   it('records drum hits correctly', async () => {

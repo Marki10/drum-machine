@@ -1,6 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import { DrumSet } from './DrumSet';
-import { RecorderProvider } from '../../context/RecorderContext';
+import { RecorderProvider } from '../../context/RecorderProvider';
 
 describe('DrumSet component', () => {
   it('renders all drum pads', () => {
@@ -10,21 +10,31 @@ describe('DrumSet component', () => {
       </RecorderProvider>,
     );
 
-    expect(screen.getByRole('button', { name: /Bass/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Snare/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Hi-Hat/i })).toBeInTheDocument();
+    expect(screen.getByText(/Bass 🪘/i)).toBeInTheDocument();
+    expect(screen.getByText(/Snare 🥁/i)).toBeInTheDocument();
+    expect(screen.getByText(/Hi-Hat 🎶/i)).toBeInTheDocument();
   });
 
-  it('activates visual feedback when a pad is clicked', () => {
+  it('activates visual feedback when a pad is clicked', async () => {
     render(
       <RecorderProvider>
         <DrumSet />
       </RecorderProvider>,
     );
 
-    const snareButton = screen.getByRole('button', { name: /Snare/i });
-    fireEvent.click(snareButton);
+    const snareButton = screen.getByText(/Snare 🥁/i).closest('button');
+    expect(snareButton).toBeInTheDocument();
 
-    expect(snareButton.className).toContain('active');
+    fireEvent.click(snareButton!);
+
+    await waitFor(() => {
+      expect(snareButton!.className).toMatch(/_pad_09af01 _snare_09af01/);
+    });
+
+    await act(async () => {
+      await new Promise((r) => setTimeout(r, 150));
+    });
+
+    expect(snareButton!.className).not.toMatch(/active/);
   });
 });

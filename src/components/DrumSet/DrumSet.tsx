@@ -1,66 +1,60 @@
-import React, { useEffect, useState } from 'react';
-import { useRecorder } from '../../context/RecorderContext';
+import React, { useEffect } from 'react';
+import { useRecorder } from '../../hooks/hooks';
+import type { DrumSound } from '../../types';
 import styles from './DrumSet.module.css';
+
+const PAD_CONFIG: Record<
+  DrumSound,
+  { label: string; key: string; soundFile: string; className: string }
+> = {
+  kick: { label: 'Bass 🪘', key: 'A', soundFile: '/sounds/kick.wav', className: styles.kick },
+  snare: { label: 'Snare 🥁', key: 'S', soundFile: '/sounds/snare.wav', className: styles.snare },
+  hihat: { label: 'Hi-Hat 🎶', key: 'D', soundFile: '/sounds/hihat.wav', className: styles.hihat },
+};
 
 export const DrumSet: React.FC = () => {
   const { recordHit } = useRecorder();
-  const pads = ['kick', 'snare', 'hihat'];
-  const [active, setActive] = useState<Record<string, boolean>>({});
 
-  const drumLabels: Record<string, string> = {
-    kick: 'Bass 🪘',
-    snare: 'Snare 🥁',
-    hihat: 'Hi-Hat 🎶',
-  };
-
-  const keyBindings: Record<string, string> = {
-    kick: 'A',
-    snare: 'S',
-    hihat: 'D',
-  };
-
-  const trigger = (name: string) => {
-    setActive((a) => ({ ...a, [name]: true }));
-    setTimeout(() => setActive((a) => ({ ...a, [name]: false })), 120);
-
+  const trigger = (sound: DrumSound) => {
     if (import.meta.env.MODE !== 'test') {
-      const audio = new Audio(`/sounds/${name}.wav`);
+      const audio = new Audio(PAD_CONFIG[sound].soundFile);
       audio.play().catch(() => {});
     }
   };
 
   useEffect(() => {
-    const map: Record<string, string> = { a: 'kick', s: 'snare', d: 'hihat' };
-    const onKey = (e: KeyboardEvent) => {
-      const name = map[e.key.toLowerCase()];
+    const onHit = (e: Event) => {
+      const name = (e as CustomEvent).detail?.sound;
       if (!name) return;
       trigger(name);
-      recordHit(name);
     };
 
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [recordHit]);
+    document.addEventListener('drum-hit', onHit as EventListener);
+    return () => document.removeEventListener('drum-hit', onHit as EventListener);
+  }, []);
 
   return (
-    <div className={styles.drumSet}>
-      {pads.map((name) => (
-        <button
-          key={name}
-          data-testid={`pad-${name}`}
-          className={`${styles.pad} ${styles[name]} ${active[name] ? styles.active : ''}`}
-          onClick={() => {
-            trigger(name);
-            recordHit(name);
-          }}
-          aria-pressed={!!active[name]}
-        >
-          <div className={styles.padContent}>
-            <span className={styles.padLabel}>{drumLabels[name]}</span>
-            <span className={styles.padKey}>{keyBindings[name]}</span>
-          </div>
-        </button>
-      ))}
+    <div className={styles.drumSetContainer}>
+      {(Object.keys(PAD_CONFIG) as DrumSound[]).map((sound) => {
+        const { label, key, className } = PAD_CONFIG[sound];
+        return (
+          <button
+            key={sound}
+            data-testid={`pad-${sound}`}
+            className={`${styles.pad} ${className}`}
+            onClick={() => {
+              trigger(sound);
+              recordHit(sound);
+            }}
+            aria-label={label}
+          >
+            <div className={styles.padContent}>
+              <span className={styles.padLabel}>{label}</span>
+              <span className={styles.padKey}>{key}</span>
+            </div>
+          </button>
+        );
+      })}
     </div>
   );
 };

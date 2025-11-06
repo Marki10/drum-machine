@@ -1,5 +1,5 @@
 export type DrumHit = {
-  sound: string;
+  sound: DrumSound;
   time: number;
 };
 
@@ -7,9 +7,11 @@ export type RecorderContextType = {
   recording: DrumHit[];
   isRecording: boolean;
   isPlaying: boolean;
-  recordHit: (sound: string) => void;
+  recordHit: (sound: DrumSound) => void;
   startRecording: () => void;
   stopRecording: () => void;
   playRecording: () => void;
   clearRecording: () => void;
 };
+
+export type DrumSound = 'kick' | 'snare' | 'hihat';

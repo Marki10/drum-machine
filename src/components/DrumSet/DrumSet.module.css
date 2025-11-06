@@ -1,9 +1,8 @@
-.drumSet {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
+.drumSetContainer {
+  display: flex;
+  gap: 8px;
   justify-content: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 24px;
 }
 
 .pad {
@@ -12,7 +11,7 @@
   border-radius: 14px;
   color: #f9f9f9;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,22 +22,30 @@
   transition: all 0.15s ease-in-out;
   text-align: center;
   user-select: none;
+  border: none;
+}
+
+.pad:active {
+  transform: translateY(2px) scale(0.97);
+  box-shadow:
+    inset 3px 3px 6px rgba(0, 0, 0, 0.4),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.05);
 }
 
 .kick {
-  background: linear-gradient(145deg, #2e3240, #272934);
+  background: linear-gradient(145deg, #2e3240, #1d2035);
 }
 
 .snare {
-  background: linear-gradient(145deg, #f27b7b, #db6a6a);
+  background: linear-gradient(145deg, #f27b7b, #813434);
 }
 
 .hihat {
-  background: linear-gradient(145deg, #ffe587, #fbd46d);
+  background: linear-gradient(145deg, #ffe587, #58491f);
   color: #222;
 }
 
-.pad.active {
+.pad:active {
   transform: translateY(2px) scale(0.97);
   box-shadow:
     inset 3px 3px 6px rgba(0, 0, 0, 0.4),
@@ -58,7 +65,7 @@
 }
 
 .padLabel {
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 700;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
   margin-bottom: 6px;
@@ -69,7 +76,7 @@
   color: #fff;
   padding: 5px 20px;
   border-radius: 6px;
-  font-size: 0.8rem;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.5px;
   box-shadow:
@@ -86,20 +93,20 @@
 
 @media (max-width: 500px) {
   .drumSet {
-    gap: 0.2rem;
+    gap: 4px;
   }
 
   .pad {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
   }
 
   .padLabel {
-    font-size: 0.9rem;
+    font-size: 14px;
   }
 
   .padKey {
-    font-size: 0.75rem;
+    font-size: 12px;
     padding: 2px 8px;
   }
 }

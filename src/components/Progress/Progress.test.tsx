@@ -1,7 +1,7 @@
 import { render, screen, act } from '@testing-library/react';
-import { RecorderProvider } from '../../context/RecorderContext';
 import { Progress } from './Progress';
 import { vi } from 'vitest';
+import { RecorderProvider } from '../../context/RecorderProvider';
 
 describe('Progress component', () => {
   it('renders progress bar', () => {

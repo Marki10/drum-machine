@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Controls } from './Controls';
-import { RecorderProvider } from '../../context/RecorderContext';
+import { RecorderProvider } from '../../context/RecorderProvider';
 
 describe('Controls component', () => {
   it('renders Record, Stop, and Play buttons', () => {

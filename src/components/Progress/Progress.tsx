@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useRecorder } from '../../context/RecorderContext';
+import { useRecorder } from '../../hooks/hooks';
+
 import styles from './Progress.module.css';
 
 export const Progress: React.FC = () => {
