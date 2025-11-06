@@ -1,10 +1,9 @@
-import { createContext, useContext, useState, useRef, useEffect } from "react";
-import type { ReactNode } from "react";
-import type { DrumHit, RecorderContextType } from "../types";
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useContext, useState, useRef, useEffect } from 'react';
+import type { ReactNode } from 'react';
+import type { DrumHit, RecorderContextType } from '../types';
 
-const RecorderContext = createContext<RecorderContextType | undefined>(
-  undefined
-);
+const RecorderContext = createContext<RecorderContextType | undefined>(undefined);
 
 export const RecorderProvider = ({ children }: { children: ReactNode }) => {
   const [recording, setRecording] = useState<DrumHit[]>([]);
@@ -14,12 +13,12 @@ export const RecorderProvider = ({ children }: { children: ReactNode }) => {
   const timeoutRefs = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => {
-    const saved = localStorage.getItem("drumRecording");
+    const saved = localStorage.getItem('drumRecording');
     if (saved) setRecording(JSON.parse(saved));
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("drumRecording", JSON.stringify(recording));
+    localStorage.setItem('drumRecording', JSON.stringify(recording));
   }, [recording]);
 
   const startRecording = () => {
@@ -59,7 +58,7 @@ export const RecorderProvider = ({ children }: { children: ReactNode }) => {
 
   const clearRecording = () => {
     setRecording([]);
-    localStorage.removeItem("drumRecording");
+    localStorage.removeItem('drumRecording');
   };
 
   const playSound = (sound: string) => {
@@ -70,14 +69,15 @@ export const RecorderProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const flashPad = (sound: string) => {
-    document.dispatchEvent(new CustomEvent("drum-hit", { detail: { sound } }));
+    document.dispatchEvent(new CustomEvent('drum-hit', { detail: { sound } }));
   };
 
   useEffect(() => {
-    return () => {
-      timeoutRefs.current.forEach(clearTimeout);
-    };
-  }, []);
+    if (isPlaying) {
+      const refsSnapshot = [...timeoutRefs.current];
+      return () => refsSnapshot.forEach(clearTimeout);
+    }
+  }, [isPlaying]);
 
   return (
     <RecorderContext.Provider
@@ -99,6 +99,6 @@ export const RecorderProvider = ({ children }: { children: ReactNode }) => {
 
 export const useRecorder = (): RecorderContextType => {
   const ctx = useContext(RecorderContext);
-  if (!ctx) throw new Error("useRecorder must be used within RecorderProvider");
+  if (!ctx) throw new Error('useRecorder must be used within RecorderProvider');
   return ctx;
 };

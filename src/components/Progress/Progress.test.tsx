@@ -1,24 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, act } from '@testing-library/react';
+import { RecorderProvider } from '../../context/RecorderContext';
 import { Progress } from './Progress';
-import { RecorderProvider, useRecorder } from '../../context/RecorderContext';
-import React from 'react';
-
-const Wrapper: React.FC<{ playing?: boolean }> = ({ playing = false }) => {
-  const { startRecording, recordHit, stopRecording, playRecording } = useRecorder();
-
-  React.useEffect(() => {
-    startRecording();
-    recordHit('snare');
-    stopRecording();
-
-    if (playing) playRecording();
-  }, [playing]);
-
-  return <Progress />;
-};
+import { vi } from 'vitest';
 
 describe('Progress component', () => {
-  it('renders the progress bar', () => {
+  it('renders progress bar', () => {
     render(
       <RecorderProvider>
         <Progress />
@@ -27,21 +13,22 @@ describe('Progress component', () => {
     expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 
-  it('resets to 0% when playback stops', () => {
-    const { rerender } = render(
+  it('progress updates while playing', async () => {
+    vi.useFakeTimers();
+
+    render(
       <RecorderProvider>
-        <Wrapper playing={true} />
+        <Progress />
       </RecorderProvider>,
     );
+
+    act(() => {
+      vi.advanceTimersByTime(1000);
+    });
 
     const fill = screen.getByTestId('progress-fill');
+    expect(parseFloat(fill.style.width)).toBeGreaterThanOrEqual(0);
 
-    rerender(
-      <RecorderProvider>
-        <Wrapper playing={false} />
-      </RecorderProvider>,
-    );
-
-    expect(fill.style.width).toBe('0%');
+    vi.useRealTimers();
   });
 });

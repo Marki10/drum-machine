@@ -14,7 +14,6 @@ export const Progress: React.FC = () => {
 
     const total = recording.at(-1)?.time || 0;
     const start = Date.now();
-
     const interval = setInterval(() => {
       const elapsed = Date.now() - start;
       setProgress(Math.min((elapsed / total) * 100, 100));
@@ -24,14 +23,12 @@ export const Progress: React.FC = () => {
   }, [isPlaying, recording]);
 
   return (
-    <div className={styles.progressWrapper}>
-      <div role="progressbar" className={styles.progressBar}>
-        <div
-          data-testid="progress-fill"
-          className={styles.progressFill}
-          style={{ width: `${progress}%` }}
-        />
-      </div>
+    <div className={styles.progressBar} role="progressbar" data-testid="progress-bar">
+      <div
+        className={styles.progressFill}
+        data-testid="progress-fill"
+        style={{ width: `${progress}%` }}
+      />
     </div>
   );
 };

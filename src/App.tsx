@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 
-import { Controls } from "./components/Controls/Controls";
-import { DrumSet } from "./components/DrumSet/DrumSet";
-import { Progress } from "./components/Progress/Progress";
+import { Controls } from './components/Controls/Controls';
+import { DrumSet } from './components/DrumSet/DrumSet';
+import { Progress } from './components/Progress/Progress';
 
-import { RecorderProvider } from "./context/RecorderContext";
+import { RecorderProvider } from './context/RecorderContext';
 
-import styles from "./App.module.css";
+import styles from './App.module.css';
 
 const App: React.FC = () => (
   <div className={styles.appWrapper}>
     <RecorderProvider>
-      <main className={styles.appContainer}>
+      <main className={styles.appContainer} data-testid="app-root">
         <h1 className={styles.title}>🥁 Drum Machine</h1>
 
         <DrumSet />

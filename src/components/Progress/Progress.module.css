@@ -12,7 +12,8 @@
   background: #2b2d3b;
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: inset 1px 1px 3px rgba(255, 255, 255, 0.05),
+  box-shadow:
+    inset 1px 1px 3px rgba(255, 255, 255, 0.05),
     inset -1px -1px 3px rgba(0, 0, 0, 0.5);
 }
 

@@ -30,7 +30,7 @@
 }
 
 .title::after {
-  content: "";
+  content: '';
   position: absolute;
   width: 90%;
   height: 3px;

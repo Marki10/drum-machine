@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useRecorder } from "../../context/RecorderContext";
-import styles from "./DrumSet.module.css";
+import React, { useEffect, useState } from 'react';
+import { useRecorder } from '../../context/RecorderContext';
+import styles from './DrumSet.module.css';
 
 export const DrumSet: React.FC = () => {
   const { recordHit } = useRecorder();
-  const pads = ["kick", "snare", "hihat"];
+  const pads = ['kick', 'snare', 'hihat'];
   const [active, setActive] = useState<Record<string, boolean>>({});
 
   const drumLabels: Record<string, string> = {
-    kick: "Bass 🪘",
-    snare: "Snare 🥁",
-    hihat: "Hi-Hat 🎶",
+    kick: 'Bass 🪘',
+    snare: 'Snare 🥁',
+    hihat: 'Hi-Hat 🎶',
   };
 
   const keyBindings: Record<string, string> = {
-    kick: "A",
-    snare: "S",
-    hihat: "D",
+    kick: 'A',
+    snare: 'S',
+    hihat: 'D',
   };
 
   const trigger = (name: string) => {
@@ -25,7 +25,7 @@ export const DrumSet: React.FC = () => {
   };
 
   useEffect(() => {
-    const map: Record<string, string> = { a: "kick", s: "snare", d: "hihat" };
+    const map: Record<string, string> = { a: 'kick', s: 'snare', d: 'hihat' };
     const onKey = (e: KeyboardEvent) => {
       const name = map[e.key.toLowerCase()];
       if (!name) return;
@@ -33,8 +33,8 @@ export const DrumSet: React.FC = () => {
       recordHit(name);
     };
 
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, [recordHit]);
 
   return (
@@ -42,7 +42,8 @@ export const DrumSet: React.FC = () => {
       {pads.map((name) => (
         <button
           key={name}
-          className={`${styles.pad} ${styles[name]} ${active[name] ? styles.active : ""}`}
+          data-testid={`pad-${name}`}
+          className={`${styles.pad} ${styles[name]} ${active[name] ? styles.active : ''}`}
           onClick={() => {
             trigger(name);
             recordHit(name);
