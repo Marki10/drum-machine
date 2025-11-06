@@ -18,7 +18,7 @@ Users can play, record, and replay drum sequences — all running locally with v
 
 # 1. Clone the repo
 
-`git clone https://github.com/<your-username>/drum-machine.git`
+`git clone https://github.com/Marki10/drum-machine.git`
 `cd drum-machine`
 
 # 2. Install dependencies
@@ -35,3 +35,12 @@ Users can play, record, and replay drum sequences — all running locally with v
 - Export recording as JSON or MIDI
 - Add multiple tracks or pattern sequencing
 - Add sound customization or upload
+
+# 🧹 Code Quality & Development Standards
+
+This project follows strict code quality and style consistency using Husky, ESLint, Prettier, and Lint-Staged.
+
+- 🧼 Prettier for automatic code formatting
+- 🔍 ESLint for TypeScript + React linting rules
+- 🐶 Husky pre-commit hook to prevent bad commits
+- 🧩 Lint-Staged ensures only changed files are checked
