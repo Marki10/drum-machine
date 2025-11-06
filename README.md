@@ -1,73 +1,37 @@
-# React + TypeScript + Vite
+# 🥁 Drum Machine
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A visual, interactive Drum Machine built with React + TypeScript (Vite).
+Users can play, record, and replay drum sequences — all running locally with visual feedback and intuitive controls.
 
-Currently, two official plugins are available:
+# 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 3 Drum Pads — Kick, Snare, and Hi-Hat, each playable via mouse or keyboard (A, S, D).
+- Record & Playback — Capture drum hits with precise timing and replay them accurately.
+- Persistent Recording — Saves your latest sequence to localStorage.
+- Visual Feedback — Pads flash on hit and glow on active playback.
+- Responsive UI — Works smoothly on both desktop and mobile.
+- Accessible Controls — Intuitive icon-only buttons for Record 🔴, Stop ⏹, and Play ▶️.
+- Progress Bar — Displays playback progress dynamically.
+- Clean Architecture — Context-based state management and modular components.
 
-## React Compiler
+# How to run localy
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# 1. Clone the repo
 
-## Expanding the ESLint configuration
+`git clone https://github.com/<your-username>/drum-machine.git`
+`cd drum-machine`
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# 2. Install dependencies
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+`npm install`
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# 3. Start dev server
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+`npm run dev`
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# 🔮 Ideas for Future Improvements
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- Add multiple record list
+- Export recording as JSON or MIDI
+- Add multiple tracks or pattern sequencing
+- Add sound customization or upload
