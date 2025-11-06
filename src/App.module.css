@@ -1,0 +1,54 @@
+.appWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #1d1e26;
+  padding: 1rem;
+}
+
+.appContainer {
+  background: #2b2e3a;
+  border-radius: 20px;
+  box-shadow:
+    8px 8px 16px rgba(0, 0, 0, 0.5),
+    -8px -8px 16px rgba(255, 255, 255, 0.05);
+  padding: 2rem 2.5rem;
+  text-align: center;
+  color: #fff;
+  width: 90%;
+  max-width: 420px;
+  transition: all 0.3s ease;
+}
+
+.title {
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.title::after {
+  content: "";
+  position: absolute;
+  width: 90%;
+  height: 3px;
+  background: #3ba9ff;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+@media (max-width: 500px) {
+  .appContainer {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+
+  .title {
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+  }
+}

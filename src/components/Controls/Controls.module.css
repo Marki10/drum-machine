@@ -1,0 +1,84 @@
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2rem;
+  margin: 1rem 0;
+}
+
+.iconButton {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #2f3242;
+  box-shadow:
+    5px 5px 10px rgba(0, 0, 0, 0.5),
+    -5px -5px 10px rgba(255, 255, 255, 0.05);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.iconButton:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.iconButton:active:not(:disabled) {
+  transform: scale(0.95);
+  box-shadow:
+    inset 3px 3px 6px rgba(0, 0, 0, 0.4),
+    inset -3px -3px 6px rgba(255, 255, 255, 0.05);
+}
+
+.iconButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.iconDot {
+  width: 16px;
+  height: 16px;
+  background: #ff3b3b;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.8);
+}
+
+.iconSquare {
+  width: 18px;
+  height: 18px;
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.iconTriangle {
+  width: 0;
+  height: 0;
+  border-left: 18px solid #3ba9ff;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  margin-left: 4px;
+  filter: drop-shadow(0 0 4px rgba(59, 169, 255, 0.6));
+}
+
+.record {
+  background: linear-gradient(145deg, #3a3d4d, #2c2f3d);
+}
+
+.stop {
+  background: linear-gradient(145deg, #404354, #323545);
+}
+
+.play {
+  background: linear-gradient(145deg, #353845, #2d2f3b);
+}
+
+@media (max-width: 500px) {
+  .iconButton {
+    width: 50px;
+    height: 50px;
+  }
+}
+

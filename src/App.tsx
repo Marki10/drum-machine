@@ -1,7 +1,25 @@
-import "./App.css";
+import React from "react";
 
-function App() {
-  return <></>;
-}
+import { Controls } from "./components/Controls/Controls";
+import { DrumSet } from "./components/DrumSet/DrumSet";
+import { Progress } from "./components/Progress/Progress";
+
+import { RecorderProvider } from "./context/RecorderContext";
+
+import styles from "./App.module.css";
+
+const App: React.FC = () => (
+  <div className={styles.appWrapper}>
+    <RecorderProvider>
+      <main className={styles.appContainer}>
+        <h1 className={styles.title}>🥁 Drum Machine</h1>
+
+        <DrumSet />
+        <Controls />
+        <Progress />
+      </main>
+    </RecorderProvider>
+  </div>
+);
 
 export default App;
