@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useRecorder } from "../../context/RecorderContext";
-import styles from "./Progress.module.css";
+import React, { useEffect, useState } from 'react';
+import { useRecorder } from '../../context/RecorderContext';
+import styles from './Progress.module.css';
 
 export const Progress: React.FC = () => {
   const { recording, isPlaying } = useRecorder();
@@ -25,11 +25,12 @@ export const Progress: React.FC = () => {
 
   return (
     <div className={styles.progressWrapper}>
-      <div className={styles.progressBar}>
+      <div role="progressbar" className={styles.progressBar}>
         <div
+          data-testid="progress-fill"
           className={styles.progressFill}
           style={{ width: `${progress}%` }}
-        ></div>
+        />
       </div>
     </div>
   );
