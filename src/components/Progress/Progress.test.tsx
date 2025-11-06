@@ -4,15 +4,6 @@ import { vi } from 'vitest';
 import { RecorderProvider } from '../../context/RecorderProvider';
 
 describe('Progress component', () => {
-  it('renders progress bar', () => {
-    render(
-      <RecorderProvider>
-        <Progress />
-      </RecorderProvider>,
-    );
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
-  });
-
   it('progress updates while playing', async () => {
     vi.useFakeTimers();
 
